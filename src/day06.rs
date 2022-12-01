@@ -102,6 +102,7 @@ fn _b(points: Vec<Point>, maxtotal: u64) -> u64 {
         if i == 0 || point.y + 1 > maxy {
             maxy = point.y + 1;
         }
+        // areas.insert(i, 0);
     }
     let mut size = 0u64;
     for y in miny..=maxy {
