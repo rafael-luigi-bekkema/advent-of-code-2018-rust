@@ -1,21 +1,14 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 
-fn load_from_file() -> Vec<String> {
-    let file = File::open("input/day02.txt").unwrap();
-    let reader = BufReader::new(file);
 
-    let words: Vec<String> = reader.lines().map(|s| s.unwrap()).collect();
 
-    return words;
-}
+use crate::aoc::load_lines;
 
 pub fn a() -> i64 {
-    _a(load_from_file())
+    _a(load_lines(2))
 }
 
 pub fn b() -> String {
-    _b(load_from_file())
+    _b(load_lines(2))
 }
 
 fn _a(words: Vec<String>) -> i64 {
@@ -66,8 +59,8 @@ fn _b(words: Vec<String>) -> String {
             if diffs == 1 {
                 result = format!(
                     "{}{}",
-                    word[..diffi].to_string(),
-                    word2[diffi + 1..].to_string()
+                    &word[..diffi],
+                    &word2[diffi + 1..]
                 );
                 break 'outer;
             }
@@ -111,6 +104,6 @@ mod tests {
 
     #[test]
     fn b2() {
-        assert_eq!("krdmtuqjgwfoevnaboxglzjph", _b(load_from_file()))
+        assert_eq!("krdmtuqjgwfoevnaboxglzjph", _b(load_lines(2)))
     }
 }

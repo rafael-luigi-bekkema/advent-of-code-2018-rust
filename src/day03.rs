@@ -11,9 +11,9 @@ struct Claim {
 
 fn parse_claim(line: String) -> Claim {
     // Example: #1 @ 1,3: 4x4
-    let parts: Vec<&str> = line.split(" ").collect();
-    let xy: Vec<&str> = parts[2][..parts[2].len() - 1].split(",").collect();
-    let wh: Vec<&str> = parts[3].split("x").collect();
+    let parts: Vec<&str> = line.split(' ').collect();
+    let xy: Vec<&str> = parts[2][..parts[2].len() - 1].split(',').collect();
+    let wh: Vec<&str> = parts[3].split('x').collect();
 
     Claim {
         id: parts[0][1..].parse::<u64>().unwrap(),
@@ -38,7 +38,7 @@ pub fn a() -> u64 {
 
 fn _a(claims: Vec<Claim>) -> u64 {
     let mut result = 0u64;
-    let mut grid = vec![0u64; 1000_000];
+    let mut grid = vec![0u64; 1_000_000];
     for claim in claims {
         for x in claim.x..claim.x + claim.w {
             for y in claim.y..claim.y + claim.h {
@@ -59,7 +59,7 @@ pub fn b() -> u64 {
 }
 
 fn _b(claims: Vec<Claim>) -> u64 {
-    let mut grid = vec![0u64; 1000_000];
+    let mut grid = vec![0u64; 1_000_000];
     for claim in claims.iter() {
         for x in claim.x..claim.x + claim.w {
             for y in claim.y..claim.y + claim.h {

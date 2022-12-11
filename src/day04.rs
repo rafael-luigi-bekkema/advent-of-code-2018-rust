@@ -33,7 +33,7 @@ fn _a(mut events: Vec<String>) -> u64 {
     let mut max_id = 0u64;
 
     for event in events.iter() {
-        let parts: Vec<&str> = event.split(" ").collect();
+        let parts: Vec<&str> = event.split(' ').collect();
 
         if event.contains("Guard") {
             cur_id = parts[3][1..].parse::<u64>().unwrap();
@@ -42,20 +42,20 @@ fn _a(mut events: Vec<String>) -> u64 {
                 minutes: [0; 60],
             });
         } else if event.contains("falls") {
-            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(":").collect();
+            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(':').collect();
             let minute = subparts[1].parse::<u64>().unwrap();
             start_sleep = minute;
         } else {
-            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(":").collect();
+            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(':').collect();
             let end_sleep = subparts[1].parse::<u64>().unwrap();
             hist.entry(cur_id).and_modify(|v| {
-                (*v).sleep += end_sleep - start_sleep;
-                if (*v).sleep > max_sleep {
-                    max_sleep = (*v).sleep;
+                v.sleep += end_sleep - start_sleep;
+                if v.sleep > max_sleep {
+                    max_sleep = v.sleep;
                     max_id = cur_id;
                 }
                 for i in start_sleep..end_sleep {
-                    (*v).minutes[i as usize] += 1;
+                    v.minutes[i as usize] += 1;
                 }
             });
         }
@@ -85,7 +85,7 @@ fn _b(mut events: Vec<String>) -> u64 {
     let mut max_sleep_at_min = 0u64;
 
     for event in events.iter() {
-        let parts: Vec<&str> = event.split(" ").collect();
+        let parts: Vec<&str> = event.split(' ').collect();
 
         if event.contains("Guard") {
             cur_id = parts[3][1..].parse::<u64>().unwrap();
@@ -94,18 +94,18 @@ fn _b(mut events: Vec<String>) -> u64 {
                 minutes: [0; 60],
             });
         } else if event.contains("falls") {
-            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(":").collect();
+            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(':').collect();
             let minute = subparts[1].parse::<u64>().unwrap();
             start_sleep = minute;
         } else {
-            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(":").collect();
+            let subparts: Vec<&str> = parts[1][..parts[1].len() - 1].split(':').collect();
             let end_sleep = subparts[1].parse::<u64>().unwrap();
             hist.entry(cur_id).and_modify(|v| {
-                (*v).sleep += end_sleep - start_sleep;
+                v.sleep += end_sleep - start_sleep;
                 for i in start_sleep..end_sleep {
-                    (*v).minutes[i as usize] += 1;
-                    if (*v).minutes[i as usize] > max_sleep_at_min {
-                        max_sleep_at_min = (*v).minutes[i as usize];
+                    v.minutes[i as usize] += 1;
+                    if v.minutes[i as usize] > max_sleep_at_min {
+                        max_sleep_at_min = v.minutes[i as usize];
                         max_min = i;
                         max_id = cur_id;
                     }

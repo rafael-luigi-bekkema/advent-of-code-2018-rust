@@ -30,7 +30,7 @@ pub fn b() -> i64 {
         .map(|item| item.unwrap().parse::<i64>().unwrap())
         .collect();
 
-    return _b(nums)
+    _b(nums)
 }
 
 fn _b(nums: Vec<i64>) -> i64 {

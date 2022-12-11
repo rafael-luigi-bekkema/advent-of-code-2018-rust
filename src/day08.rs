@@ -4,11 +4,11 @@ fn load_from_file() -> Vec<u64> {
     let mut file = File::open("input/day08.txt").unwrap();
     let mut line = String::new();
     file.read_to_string(&mut line).unwrap();
-    parse(line.strip_suffix("\n").unwrap())
+    parse(line.strip_suffix('\n').unwrap())
 }
 
 fn parse(line: &str) -> Vec<u64> {
-    line.split(" ").map(|item| item.parse().expect(&format!("VALUE: '{}'", item))).collect()
+    line.split(' ').map(|item| item.parse().unwrap_or_else(|_| panic!("VALUE: '{item}'"))).collect()
 }
 
 pub fn a() -> u64 {

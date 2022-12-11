@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::aoc::{load_lines, load_text};
+use crate::aoc::load_text;
 
 pub fn a() -> usize {
     _a(load_text(9))
@@ -20,11 +20,11 @@ struct Marble {
 
 impl Marble {
     fn prev(self: &Marble) -> RcMarble {
-        self.prev.as_ref().map(|i| i.clone()).unwrap()
+        self.prev.as_ref().cloned().unwrap()
     }
 
     fn next(self: &Marble) -> RcMarble {
-        self.next.as_ref().map(|i| i.clone()).unwrap()
+        self.next.as_ref().cloned().unwrap()
     }
 
     fn remove(self: &mut Marble) {

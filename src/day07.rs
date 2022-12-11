@@ -37,9 +37,9 @@ fn _a(steps: Vec<Step>) -> String {
     let mut set: HashMap<char, HashSet<char>> = HashMap::new();
 
     for step in steps.iter() {
-        let entry = set.entry(step.after as char).or_insert(HashSet::new());
-        entry.insert(step.before as char);
-        set.entry(step.before as char).or_insert(HashSet::new());
+        let entry = set.entry(step.after).or_insert(HashSet::new());
+        entry.insert(step.before);
+        set.entry(step.before).or_insert(HashSet::new());
     }
 
     let mut result = Vec::new();
@@ -47,12 +47,12 @@ fn _a(steps: Vec<Step>) -> String {
     loop {
         let mut readies = Vec::new();
         for (after, befores) in set.iter() {
-            if befores.len() == 0 {
+            if befores.is_empty() {
                 readies.push(*after);
             }
         }
 
-        if readies.len() == 0 {
+        if readies.is_empty() {
             break;
         }
 
@@ -79,9 +79,9 @@ fn _b(steps: Vec<Step>, extra_time: u64, elves: u64) -> u64 {
     let mut set: HashMap<char, HashSet<char>> = HashMap::new();
 
     for step in steps.iter() {
-        let entry = set.entry(step.after as char).or_insert(HashSet::new());
-        entry.insert(step.before as char);
-        set.entry(step.before as char).or_insert(HashSet::new());
+        let entry = set.entry(step.after).or_insert(HashSet::new());
+        entry.insert(step.before);
+        set.entry(step.before).or_insert(HashSet::new());
     }
 
     let mut assigned: BTreeMap<u64, Option<Job>> = BTreeMap::new();
@@ -93,12 +93,12 @@ fn _b(steps: Vec<Step>, extra_time: u64, elves: u64) -> u64 {
     let mut unassigned = Vec::new();
     'outer: loop {
         unassigned.extend(
-            set.drain_filter(|_after, befores| befores.len() == 0)
+            set.drain_filter(|_after, befores| befores.is_empty())
                 .map(|(key, _val)| key),
         );
 
         for (_elf, elf_job) in assigned.iter_mut() {
-            if elf_job.is_none() && unassigned.len() > 0 {
+            if elf_job.is_none() && !unassigned.is_empty() {
                 let newjob = unassigned.remove(0);
                 let step_time: u64 = extra_time + ((newjob as u64) - 64);
                 *elf_job = Some(Job {
@@ -116,7 +116,7 @@ fn _b(steps: Vec<Step>, extra_time: u64, elves: u64) -> u64 {
                         val.remove(&job.step);
                     }
                     *elf_job = None;
-                    if unassigned.len() == 0 && set.len() == 0 {
+                    if unassigned.is_empty() && set.is_empty() {
                         break 'outer;
                     }
                 }
@@ -147,7 +147,7 @@ mod tests {
                 "Step F must be finished before step E can begin.".to_string(),
             ]
             .into_iter()
-            .map(|item| parse_step(item))
+            .map(parse_step)
             .collect())
         );
     }
@@ -172,7 +172,7 @@ mod tests {
                     "Step F must be finished before step E can begin.".to_string(),
                 ]
                 .into_iter()
-                .map(|item| parse_step(item))
+                .map(parse_step)
                 .collect(),
                 0,
                 2

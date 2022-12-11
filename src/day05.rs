@@ -25,9 +25,7 @@ fn react(mut pol: Vec<u8>) -> u64 {
         if pol[i].abs_diff(pol[i + 1]) == 32 {
             pol.remove(i + 1);
             pol.remove(i);
-            if i > 0 {
-                i -= 1;
-            }
+            i = i.saturating_sub(1);
             continue;
         }
         i += 1
