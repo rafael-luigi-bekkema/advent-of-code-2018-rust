@@ -1,6 +1,7 @@
 #![feature(drain_filter)]
 #![feature(hash_drain_filter)]
 
+mod aoc;
 mod day01;
 mod day02;
 mod day03;
@@ -9,6 +10,7 @@ mod day05;
 mod day06;
 mod day07;
 mod day08;
+mod day09;
 
 use std::env;
 
@@ -48,6 +50,10 @@ fn main() {
         "8" => {
             println!("day08a: {}", day08::a());
             println!("day08a: {}", day08::b());
+        }
+        "9" => {
+            println!("day09a: {}", day09::a());
+            println!("day09b: {}", day09::b());
         }
         _ => {
             println!("unknown case");
